@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel", "Motel\Motel.csproj", "{7ACE977C-9E9C-402B-B2DD-5AB9E22A5864}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Motel.Tests", "Motel.Tests\Motel.Tests.csproj", "{FEC4AB73-AF3D-46F6-918D-2E9F714D0B56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7ACE977C-9E9C-402B-B2DD-5AB9E22A5864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACE977C-9E9C-402B-B2DD-5AB9E22A5864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACE977C-9E9C-402B-B2DD-5AB9E22A5864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACE977C-9E9C-402B-B2DD-5AB9E22A5864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEC4AB73-AF3D-46F6-918D-2E9F714D0B56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEC4AB73-AF3D-46F6-918D-2E9F714D0B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEC4AB73-AF3D-46F6-918D-2E9F714D0B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEC4AB73-AF3D-46F6-918D-2E9F714D0B56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
