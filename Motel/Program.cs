@@ -72,10 +72,10 @@ services.AddSingleton(dataSource);
 // FluentValidation configuration (part)
 
 ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
-ValidatorOptions.Global.DisplayNameResolver = (type, member, expression) => SnakeCaseNamingPolicy.ToSnakeCase(member.Name);
+ValidatorOptions.Global.DisplayNameResolver = (type, member, expression) => CamelCaseNamingPolicy.ToCamelCase(member.Name);
 
 // WhenPropertyChanged not work with this, TODO: fix
-//ValidatorOptions.Global.PropertyNameResolver = (type, member, expression) => SnakeCaseNamingPolicy.ToSnakeCase(member.Name);
+ValidatorOptions.Global.PropertyNameResolver = (type, member, expression) => CamelCaseNamingPolicy.ToCamelCase(member.Name);
         
 ValidatorOptions.Global.DefaultRuleLevelCascadeMode = CascadeMode.Stop;
 
@@ -88,8 +88,8 @@ services.AddControllers(options =>
     })
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(SnakeCaseNamingPolicy.Instance));
+        options.JsonSerializerOptions.PropertyNamingPolicy = CamelCaseNamingPolicy.Instance;
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(CamelCaseNamingPolicy.Instance));
 #if !DEBUG
         options.AllowInputFormatterExceptionMessages = false;
 #endif

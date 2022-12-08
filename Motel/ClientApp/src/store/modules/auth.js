@@ -14,7 +14,7 @@ export default {
 		jwtData: state => state.jwtData,
 		role: state => state.jwtData?.role,
 
-		fullName: state => state.me ? getFullname(state.me.first_name, state.me.last_name, state.me.patronymic) : null,
+		fullName: state => state.me ? getFullname(state.me.firstName, state.me.lastName, state.me.patronymic) : null,
 	},
 	mutations: {
 		auth(state, value) {
@@ -43,7 +43,7 @@ export default {
 				password: password
 			});
 
-			let jwt = res.access_token;
+			let jwt = res.accessToken;
 			console.log('jwt: ', jwt);
 			console.assert(!!jwt, "JWT must be not null here");
 			ctx.commit('auth', jwt);

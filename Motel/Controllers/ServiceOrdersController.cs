@@ -20,7 +20,8 @@ public class ServiceOrdersController : ControllerBase
         [FromQuery] int? serviceId,
         [FromQuery] DateTime? from,
         [FromQuery] DateTime? to,
-        [FromQuery] bool verbose = false
+        [FromQuery] bool verbose = false,
+        [FromQuery] bool includeRoomInfo = false
     )
     {
         IQueryable<ServiceOrder> query = context.ServiceOrders;
@@ -30,17 +31,27 @@ public class ServiceOrdersController : ControllerBase
         if (from is { }) query = query.Where(o => o.Datetime >= from);
         if (to is { }) query = query.Where(o => o.Datetime <= to);
 
-        if (verbose)
-            return Ok(await query.AsNoTracking()
+        return verbose switch
+        {
+            true when includeRoomInfo => Ok(await query.AsNoTracking()
                 .Include(o => o.Room)
                 .ThenInclude(r => r.RoomType)
                 .Include(o => o.Service)
-                .ToListAsync());
+                .ToListAsync()),
 
-        return Ok(await query
-            .Select(o => new { o.Id, o.RoomNumber, o.ServiceId })
-            .ToListAsync()
-        );
+            true when !includeRoomInfo => Ok(await query.AsNoTracking()
+                .Select(o => new
+                {
+                    o.Id,
+                    o.ServiceId,
+                    o.RoomNumber,
+                    o.Datetime,
+                    Service = new { o.Service.Id, o.Service.Name, o.Service.Price }
+                })
+                .ToListAsync()),
+
+            _ => Ok(await query.Select(o => new { o.Id, o.ServiceId, o.RoomNumber }).ToListAsync())
+        };
     }
 
     [HttpGet("/api/service-orders/{id:int}"), Authorize(Policy = nameof(Posts.Salesman))]

@@ -18,6 +18,12 @@ public class LeaseAgreementsController : ControllerBase
             {
                 l.Id, l.ClientName, l.StartAt, l.EndAt,
                 Rooms = l.LeaseRooms.Select(lr => lr.RoomNumber)
+                /*Rooms = l.LeaseRooms.Select(lr => new
+                {
+                    lr.Room.Number,
+                    lr.Room.RoomTypeId,
+                    lr.Room.RoomType,
+                })*/
             })
             .ToListAsync();
 
@@ -99,8 +105,8 @@ public class LeaseAgreementsController : ControllerBase
 
         if (model.ChangedProperties.Count == 0) return StatusCode(StatusCodes.Status204NoContent);
 
-        // TODO: check
-        bool isStartAtChanged = model.IsFieldPresent(l => l.StartAt);
+        // TODO: fix
+        /*bool isStartAtChanged = model.IsFieldPresent(l => l.StartAt);
         bool isEndAtChanged = model.IsFieldPresent(l => l.EndAt);
         if (isStartAtChanged || isEndAtChanged)
         {
@@ -127,7 +133,7 @@ public class LeaseAgreementsController : ControllerBase
                 return Problem(title: $"Rooms with numbers [{String.Join(", ", occupiedRooms)}] are occupied",
                     statusCode: StatusCodes.Status400BadRequest);
             }
-        }
+        }*/
 
         LeaseAgreement leaseAgreement = new()
         {

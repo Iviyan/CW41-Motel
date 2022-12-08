@@ -2,11 +2,11 @@
 
 	<form @submit.prevent="add">
 		<div class="form-floating mb-3">
-			<input type="text" class="form-control" v-model="employee.last_name">
+			<input type="text" class="form-control" v-model="employee.lastName">
 			<label>Фамилия</label>
 		</div>
 		<div class="form-floating mb-3">
-			<input type="text" class="form-control" v-model="employee.first_name">
+			<input type="text" class="form-control" v-model="employee.firstName">
 			<label>Имя</label>
 		</div>
 		<div class="form-floating mb-3">
@@ -14,11 +14,11 @@
 			<label>Отчество</label>
 		</div>
 		<div class="form-floating mb-3">
-			<input type="text" class="form-control" v-model="employee.passport_serial">
+			<input type="text" class="form-control" v-model="employee.passportSerial">
 			<label>Серия паспорта</label>
 		</div>
 		<div class="form-floating mb-3">
-			<input type="text" class="form-control" v-model="employee.passport_number">
+			<input type="text" class="form-control" v-model="employee.passportNumber">
 			<label>Номер паспорта</label>
 		</div>
 		<div class="form-floating mb-3">
@@ -59,22 +59,18 @@ import {roleNames, roles} from "@/utils/roles";
 import {RequestError} from "@/exceptions";
 import {call_post} from "@/utils/api";
 import router from "@/router";
-
-function omit(obj, key) {
-	const { [key]: omitted, ...rest } = obj;
-	return rest;
-}
+import {omit} from "@/utils/utils";
 
 const newEmployeeRoles = omit(roleNames, 'Admin')
 
 const employees = inject('employees')
 
 const employee = reactive({
-	last_name: '',
-	first_name: '',
+	lastName: '',
+	firstName: '',
 	patronymic: '',
-	passport_serial: '',
-	passport_number: '',
+	passportSerial: '',
+	passportNumber: '',
 	birthday: new Date().toISOString().slice(0, 10),
 	phone: '',
 	post: roles.hr,

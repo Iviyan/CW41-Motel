@@ -27,3 +27,6 @@ Date.prototype.addDays = function (days) {
 	date.setDate(date.getDate() + days);
 	return date;
 }
+
+Date.prototype.toInputDate = function () { return this.toISOString().substring(0, 10); }
+Date.prototype.toInputDateTime = function () { return this.toISOString().substring(0, 16); }

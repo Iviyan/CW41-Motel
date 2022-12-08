@@ -42,8 +42,8 @@ const changePasswordModal = reactive({
 async function tryChangePassword() {
 	try {
 		await call_post('/change-password', {
-			old_password: changePasswordModal.oldPassword,
-			new_password: changePasswordModal.newPassword,
+			oldPassword: changePasswordModal.oldPassword,
+			newPassword: changePasswordModal.newPassword,
 		});
 		changePasswordModal.show = false;
 		changePasswordModal.error = changePasswordModal.newPassword = changePasswordModal.oldPassword = ``;

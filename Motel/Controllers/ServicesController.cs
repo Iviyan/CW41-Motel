@@ -13,11 +13,11 @@ public class ServicesController : ControllerBase
     [HttpGet("/api/services"), Authorize(Policy = nameof(Posts.Salesman))]
     public async Task<IActionResult> GetAll(
         [FromServices] ApplicationContext context,
-        [FromQuery] bool includeNonActual = true)
+        [FromQuery] bool onlyActual = false)
     {
         IQueryable<Service> query = context.Services;
 
-        if (!includeNonActual) query = query.Where(s => s.IsActual == true);
+        if (onlyActual) query = query.Where(s => s.IsActual == true);
 
         var result = await query.ToListAsync();
         

@@ -19,7 +19,7 @@ async function refreshToken() {
 
 		console.log('Refresh token update: ', response, 'json: ', json)
 		if (response.ok) {
-			store.commit('auth', json.access_token);
+			store.commit('auth', json.accessToken);
 			return true;
 		}
 		console.error('Refresh token update error.\n', json);

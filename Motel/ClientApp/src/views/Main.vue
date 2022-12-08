@@ -13,10 +13,45 @@
 					</router-link>
 				</li>
 
+				<li class="dark" v-if="isRole(roles.admin)" :class="{active: router.currentRoute.value.name.startsWith('admin-info')}">
+					<router-link :to="{ name: 'admin-info' }">
+						<span class="nav-text">Панель администратора</span>
+					</router-link>
+				</li>
 
-				<li class="dark" v-if="isRole(roles.admin, roles.hr)" :class="{active: router.currentRoute.value.name === 'employees'}">
+				<li class="dark" v-if="isRole(roles.admin, roles.hr)" :class="{active: router.currentRoute.value.name.startsWith('employees')}">
 					<router-link :to="{ name: 'employees' }">
 						<span class="nav-text">Сотрудники</span>
+					</router-link>
+				</li>
+
+				<li class="dark" v-if="isRole(roles.admin, roles.salesman)" :class="{active: router.currentRoute.value.name.startsWith('room-types')}">
+					<router-link :to="{ name: 'room-types' }">
+						<span class="nav-text">Типы номеров</span>
+					</router-link>
+				</li>
+
+				<li class="dark" v-if="isRole(roles.admin, roles.salesman)" :class="{active: router.currentRoute.value.name.startsWith('services')}">
+					<router-link :to="{ name: 'services' }">
+						<span class="nav-text">Услуги</span>
+					</router-link>
+				</li>
+
+				<li class="dark" v-if="isRole(roles.admin, roles.salesman)" :class="{active: router.currentRoute.value.name.startsWith('rooms')}">
+					<router-link :to="{ name: 'rooms' }">
+						<span class="nav-text">Номера</span>
+					</router-link>
+				</li>
+
+				<li class="dark" v-if="isRole(roles.admin, roles.salesman)" :class="{active: router.currentRoute.value.name.startsWith('service-orders')}">
+					<router-link :to="{ name: 'service-orders' }">
+						<span class="nav-text">Заказы</span>
+					</router-link>
+				</li>
+
+				<li class="dark" v-if="isRole(roles.admin, roles.salesman)" :class="{active: router.currentRoute.value.name.startsWith('lease-agreements')}">
+					<router-link :to="{ name: 'lease-agreements' }">
+						<span class="nav-text">Договора аренды</span>
 					</router-link>
 				</li>
 
@@ -237,6 +272,21 @@ nav ul, nav li {
 .user-role {
 	margin: 0;
 	text-align: center;
+}
+
+/**/
+
+.header {
+	margin: 0 0 10px 0;
+	text-align: center;
+	font-weight: 500;
+}
+
+.error-message {
+	margin: 1rem 0 0 0;
+	color: #c00;
+	text-align: center;
+	word-break: break-word;
 }
 
 </style>

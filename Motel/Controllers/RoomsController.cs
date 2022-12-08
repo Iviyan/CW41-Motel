@@ -1,4 +1,6 @@
-﻿namespace Motel.Controllers;
+﻿using Microsoft.EntityFrameworkCore.Query;
+
+namespace Motel.Controllers;
 
 [ApiController]
 public class RoomsController : ControllerBase
@@ -11,9 +13,23 @@ public class RoomsController : ControllerBase
     }
 
     [HttpGet("/api/rooms"), Authorize(Policy = nameof(Posts.Salesman))]
-    public async Task<IActionResult> GetAll([FromServices] ApplicationContext context)
+    public async Task<IActionResult> GetAll(
+        [FromServices] ApplicationContext context,
+        [FromQuery] bool onlyFree = false
+    )
     {
-        var result = await context.Rooms.Include(r => r.RoomType).ToListAsync();
+        DateTime now = DateTime.UtcNow;
+        
+        IQueryable<Room> query = context.Rooms.Include(r => r.RoomType).OrderBy(r => r.Number);
+        if (onlyFree)
+        {
+            query = query.Where(r => r.IsReady &&
+                !context.LeaseRooms.Where(lr => lr.LeaseAgreement.StartAt <= now && lr.LeaseAgreement.EndAt >= now)
+                    .Select(lr => lr.RoomNumber).Contains(r.Number)
+            );
+        }
+
+        var result = await query.ToListAsync();
 
         return Ok(result);
     }
@@ -77,11 +93,11 @@ public class RoomsController : ControllerBase
 
             if (c == 0) return StatusCode(StatusCodes.Status409Conflict);
         }
-        
-        if (isNumberChanged) 
+
+        if (isNumberChanged)
             model.ChangedProperties.ExceptWith(new[] { nameof(RoomPatchModel.Number) });
-        
-        if (model.IsFieldPresent(r => r.RoomTypeId) 
+
+        if (model.IsFieldPresent(r => r.RoomTypeId)
             && !await context.RoomTypes.AnyAsync(s => s.Id == model.RoomTypeId!.Value))
         {
             return Problem(title: "Invalid service id", statusCode: StatusCodes.Status400BadRequest);
