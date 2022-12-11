@@ -10,7 +10,8 @@ public class RoomTypesController : ControllerBase
         this.logger = logger;
     }
 
-    [HttpGet("/api/room-types"), Authorize(Policy = nameof(Posts.Salesman))]
+    [HttpGet("/api/room-types"),
+     Authorize(Roles = $"{nameof(Posts.Hr)},{nameof(Posts.Maid)},{nameof(Posts.Admin)}")]
     public async Task<IActionResult> GetAll([FromServices] ApplicationContext context)
     {
         var result = await context.RoomTypes.ToListAsync();
@@ -18,7 +19,8 @@ public class RoomTypesController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("/api/room-types/{id:int}"), Authorize(Policy = nameof(Posts.Salesman))]
+    [HttpGet("/api/room-types/{id:int}"), 
+     Authorize(Roles = $"{nameof(Posts.Hr)},{nameof(Posts.Maid)},{nameof(Posts.Admin)}")]
     public async Task<IActionResult> Get(int id,
         [FromServices] ApplicationContext context)
     {

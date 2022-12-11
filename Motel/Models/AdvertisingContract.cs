@@ -11,7 +11,7 @@ public class AdvertisingContract
     [Column("company_name")] public required string CompanyName { get; set; }
     [Column("datetime")] public DateTime Datetime { get; set; }
     [Column("description")] public required string Description { get; set; }
-    [Column("cost")] public double Cost { get; set; }
+    [Column("cost", TypeName = "money")] public double Cost { get; set; }
     [Column("employee_id")] public int EmployeeId { get; set; }
     [Column("is_active")] public bool IsActive { get; set; }
 
@@ -30,7 +30,7 @@ public class AdvertisingContractCreateModelValidator : AbstractValidator<Adverti
 {
     public AdvertisingContractCreateModelValidator()
     {
-        RuleFor(serviceOrder => serviceOrder.CompanyName).NotNull().MaximumLength(100);
+        RuleFor(serviceOrder => serviceOrder.CompanyName).NotNull().NotEmpty().MaximumLength(100);
         RuleFor(serviceOrder => serviceOrder.Datetime).NotNull();
         RuleFor(serviceOrder => serviceOrder.Description).NotNull();
         RuleFor(serviceOrder => serviceOrder.Cost).NotNull().GreaterThanOrEqualTo(0);

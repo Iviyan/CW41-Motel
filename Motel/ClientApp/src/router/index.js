@@ -40,6 +40,14 @@ const LeaseAgreementsNewView = () => import('../views/leaseAgreements/New')
 const LeaseAgreementsEditView = () => import('../views/leaseAgreements/Edit')
 const LeaseAgreementsGraphView = () => import('../views/leaseAgreements/Graph')
 
+const AdvertisingContractsView = () => import('../views/advertisingContracts/Index')
+const AdvertisingContractsListView = () => import('../views/advertisingContracts/List')
+const AdvertisingContractsNewView = () => import('../views/advertisingContracts/New')
+const AdvertisingContractsEditView = () => import('../views/advertisingContracts/Edit')
+
+const RoomCleaningsView = () => import('../views/roomCleanings/Index')
+const RoomCleaningsListView = () => import('../views/roomCleanings/List')
+
 const isNotAuthenticated = (to, from) => {
 	console.log(store);
 	if (store.getters.isAuth)
@@ -111,7 +119,7 @@ const routes = [
 			{
 				path: 'rooms',
 				component: RoomsView,
-				beforeEnter: isRole(roles.admin, roles.salesman),
+				beforeEnter: isRole(roles.admin, roles.salesman, roles.maid),
 				children: [
 					{name: 'rooms-new', path: 'new', component: RoomsNewView},
 					{name: 'rooms', path: '', component: RoomsListView},
@@ -119,6 +127,14 @@ const routes = [
 						name: 'rooms-edit', path: ':id(\\d+)', component: RoomsEditView,
 						props: route => ({id: Number(route.params.id)})
 					},
+				]
+			},
+			{
+				path: 'room-cleanings',
+				component: RoomCleaningsView,
+				beforeEnter: isRole(roles.admin, roles.salesman, roles.maid),
+				children: [
+					{name: 'room-cleanings', path: '', component: RoomCleaningsListView},
 				]
 			},
 			{
@@ -146,6 +162,19 @@ const routes = [
 						props: route => ({id: Number(route.params.id)})
 					},
 					{name: 'lease-agreements-graph', path: 'graph', component: LeaseAgreementsGraphView},
+				]
+			},
+			{
+				path: 'advertising-contracts',
+				component: AdvertisingContractsView,
+				beforeEnter: isRole(roles.admin, roles.marketingSpecialist),
+				children: [
+					{name: 'advertising-contracts-new', path: 'new', component: AdvertisingContractsNewView},
+					{name: 'advertising-contracts', path: '', component: AdvertisingContractsListView},
+					{
+						name: 'advertising-contracts-edit', path: ':id(\\d+)', component: AdvertisingContractsEditView,
+						props: route => ({id: Number(route.params.id)})
+					}
 				]
 			},
 			{

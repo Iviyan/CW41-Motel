@@ -37,9 +37,15 @@
 					</router-link>
 				</li>
 
-				<li class="dark" v-if="isRole(roles.admin, roles.salesman)" :class="{active: router.currentRoute.value.name.startsWith('rooms')}">
+				<li class="dark" v-if="isRole(roles.admin, roles.salesman, roles.maid)" :class="{active: router.currentRoute.value.name.startsWith('rooms')}">
 					<router-link :to="{ name: 'rooms' }">
 						<span class="nav-text">Номера</span>
+					</router-link>
+				</li>
+
+				<li class="dark" v-if="isRole(roles.admin, roles.salesman, roles.maid)" :class="{active: router.currentRoute.value.name.startsWith('room-cleanings')}">
+					<router-link :to="{ name: 'room-cleanings' }">
+						<span class="nav-text">Уборка номеров</span>
 					</router-link>
 				</li>
 
@@ -52,6 +58,12 @@
 				<li class="dark" v-if="isRole(roles.admin, roles.salesman)" :class="{active: router.currentRoute.value.name.startsWith('lease-agreements')}">
 					<router-link :to="{ name: 'lease-agreements' }">
 						<span class="nav-text">Договора аренды</span>
+					</router-link>
+				</li>
+
+				<li class="dark" v-if="isRole(roles.admin, roles.marketingSpecialist)" :class="{active: router.currentRoute.value.name.startsWith('advertising-contracts')}">
+					<router-link :to="{ name: 'advertising-contracts' }">
+						<span class="nav-text">Рекламные договоры</span>
 					</router-link>
 				</li>
 

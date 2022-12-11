@@ -10,7 +10,8 @@ public class RoomCleaningsController : ControllerBase
         this.logger = logger;
     }
 
-    [HttpGet("/api/room-cleanings"), Authorize(Policy = nameof(Posts.Maid))]
+    [HttpGet("/api/room-cleanings"),
+     Authorize(Roles = $"{nameof(Posts.Salesman)},{nameof(Posts.Maid)},{nameof(Posts.Admin)}")]
     public async Task<IActionResult> GetAll(
         [FromServices] ApplicationContext context,
         [FromQuery] int? roomNumber,
@@ -89,7 +90,8 @@ public class RoomCleaningsController : ControllerBase
         });
     }
 
-    [HttpDelete("/api/room-cleanings/{roomNumber:int}/{datetime:datetime}"), Authorize(Policy = nameof(Posts.Salesman))]
+    [HttpDelete("/api/room-cleanings/{roomNumber:int}/{datetime:datetime}"),
+     Authorize(Roles = $"{nameof(Posts.Salesman)},{nameof(Posts.Maid)},{nameof(Posts.Admin)}")]
     public async Task<IActionResult> Delete(int roomNumber, DateTime dateTime,
         [FromServices] ApplicationContext context)
     {

@@ -12,7 +12,7 @@ public class RoomsController : ControllerBase
         this.logger = logger;
     }
 
-    [HttpGet("/api/rooms"), Authorize(Policy = nameof(Posts.Salesman))]
+    [HttpGet("/api/rooms"), Authorize(Roles = $"{nameof(Posts.Hr)},{nameof(Posts.Maid)},{nameof(Posts.Admin)}")]
     public async Task<IActionResult> GetAll(
         [FromServices] ApplicationContext context,
         [FromQuery] bool onlyFree = false
