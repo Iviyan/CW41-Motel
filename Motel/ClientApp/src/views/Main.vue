@@ -7,11 +7,11 @@
 			<hr>
 
 			<ul>
-				<li class="darker-shadow-down pd-b" :class="{active: router.currentRoute.value.name === 'home'}">
+<!--				<li class="darker-shadow-down pd-b" :class="{active: router.currentRoute.value.name === 'home'}">
 					<router-link :to="{ name: 'home' }">
 						<span class="nav-text">Главная</span>
 					</router-link>
-				</li>
+				</li>-->
 
 				<li class="dark" v-if="isRole(roles.admin)" :class="{active: router.currentRoute.value.name.startsWith('admin-info')}">
 					<router-link :to="{ name: 'admin-info' }">
@@ -61,11 +61,11 @@
 					</router-link>
 				</li>
 
-				<li class="dark" v-if="isRole(roles.admin, roles.marketingSpecialist)" :class="{active: router.currentRoute.value.name.startsWith('advertising-contracts')}">
+<!--				<li class="dark" v-if="isRole(roles.admin, roles.marketingSpecialist)" :class="{active: router.currentRoute.value.name.startsWith('advertising-contracts')}">
 					<router-link :to="{ name: 'advertising-contracts' }">
 						<span class="nav-text">Рекламные договоры</span>
 					</router-link>
-				</li>
+				</li>-->
 
 				<li class="darker-shadow pd-t">
 					<a href="#" @click="logout">

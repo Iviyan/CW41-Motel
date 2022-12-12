@@ -40,23 +40,32 @@ const LeaseAgreementsNewView = () => import('../views/leaseAgreements/New')
 const LeaseAgreementsEditView = () => import('../views/leaseAgreements/Edit')
 const LeaseAgreementsGraphView = () => import('../views/leaseAgreements/Graph')
 
-const AdvertisingContractsView = () => import('../views/advertisingContracts/Index')
+/*const AdvertisingContractsView = () => import('../views/advertisingContracts/Index')
 const AdvertisingContractsListView = () => import('../views/advertisingContracts/List')
 const AdvertisingContractsNewView = () => import('../views/advertisingContracts/New')
-const AdvertisingContractsEditView = () => import('../views/advertisingContracts/Edit')
+const AdvertisingContractsEditView = () => import('../views/advertisingContracts/Edit')*/
 
 const RoomCleaningsView = () => import('../views/roomCleanings/Index')
 const RoomCleaningsListView = () => import('../views/roomCleanings/List')
 
+const defaultRoutes = {
+	[roles.admin]: 'employees',
+	[roles.hr]: 'employees',
+	[roles.salesman]: 'rooms',
+	[roles.maid]: 'rooms',
+	[roles.marketingSpecialist]: 'advertising-contracts',
+	[roles.accountant]: 'main',
+}
+
 const isNotAuthenticated = (to, from) => {
 	console.log(store);
 	if (store.getters.isAuth)
-		return '/';
+		return {name: defaultRoutes[store.getters.role]};
 }
 
 const isAuthenticated = (to, from) => {
 	if (!store.getters.isAuth && to.name !== 'Login') {
-		return {name: 'login'}
+		return from.fullPath === '/' ? {name: 'info'} : {name: 'login'}
 	}
 }
 
@@ -71,12 +80,18 @@ const routes = [
 		meta: {title: 'Вход'}
 	},
 	{
+		path: '/info',
+		name: 'info',
+		component: HomeView,
+		beforeEnter: isNotAuthenticated,
+		meta: {title: 'Главная'}
+	},
+	{
 		path: '/',
 		name: 'main',
 		component: MainView,
 		beforeEnter: isAuthenticated,
 		children: [
-			{path: '', name: 'home', component: HomeView, meta: {title: 'Главная'}},
 			{
 				path: 'employees',
 				component: EmployeesView,
@@ -164,7 +179,7 @@ const routes = [
 					{name: 'lease-agreements-graph', path: 'graph', component: LeaseAgreementsGraphView},
 				]
 			},
-			{
+			/*{
 				path: 'advertising-contracts',
 				component: AdvertisingContractsView,
 				beforeEnter: isRole(roles.admin, roles.marketingSpecialist),
@@ -176,7 +191,7 @@ const routes = [
 						props: route => ({id: Number(route.params.id)})
 					}
 				]
-			},
+			},*/
 			{
 				path: 'admin-info', name: 'admin-info',
 				beforeEnter: isRole(roles.admin),

@@ -8,7 +8,7 @@ grant all privileges  on database  motel to motel;
 
 -- \c motel
    
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO eSumit;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO motel;
 
 alter default privileges in schema public grant all privileges on tables to motel;
 alter default privileges in schema public grant all privileges on sequences to motel;

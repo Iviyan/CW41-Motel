@@ -26,6 +26,7 @@ global using FluentValidation.AspNetCore;
 global using Motel.Database;
 global using Motel.Models;
 global using Motel.Utils;
+global using Microsoft.OpenApi.Models;
 using System.Diagnostics;
 using Motel.Configuration;
 using Motel;
@@ -95,6 +96,13 @@ services.AddControllers(options =>
 #endif
         options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter());
     });
+
+services.AddEndpointsApiExplorer();
+
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Motel API", Version = "v1" });
+});
 
 services.AddFluentValidationAutoValidation(fv => { fv.DisableDataAnnotationsValidation = true; });
 services.AddValidatorsFromAssemblyContaining<Program>(lifetime: ServiceLifetime.Singleton);
@@ -202,6 +210,9 @@ app.Use(async (context, next) =>
 });
 
 app.MapControllers();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // https://github.com/dotnet/aspnetcore/issues/5223#issuecomment-433394061
 //if (false)

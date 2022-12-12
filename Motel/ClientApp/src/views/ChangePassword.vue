@@ -1,5 +1,5 @@
 ﻿<template>
-	<h3 class="fs-3">Изменение пароля</h3>
+	<h3 class="fs-3 text-center">Изменение пароля</h3>
 	<form class="s-form">
 		<p class="fieldset">
 			<input v-model="changePasswordModal.oldPassword"
@@ -22,7 +22,7 @@
 		</p>
 
 		<p class="error-message">{{ changePasswordModal.error }}</p>
-		<button type="submit">Изменить</button>
+		<button class="btn btn-outline-primary" type="submit">Изменить</button>
 	</form>
 </template>
 

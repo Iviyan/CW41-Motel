@@ -21,9 +21,6 @@ export async function postj(url = '', data = {}) {
   return await response.json();
 }
 
-export async function get(url = '', data = {}) {
-  const response = await fetch(url + '?' + new URLSearchParams(data), { method: 'GET' });
-  return await response.json();
-}
+export const get = async (url = '', data = {}) => await fetch(url + '?' + new URLSearchParams(data), {method: 'GET'});
 
-export async function getj(url = '', data = {}) { return await (await get(url, data)).json(); }
+export const getj = async (url = '', data = {}) => await(await get(url, data)).json();

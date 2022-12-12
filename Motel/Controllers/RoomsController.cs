@@ -12,6 +12,25 @@ public class RoomsController : ControllerBase
         this.logger = logger;
     }
 
+    [HttpGet("/api/rooms/public"), AllowAnonymous]
+    public async Task<IActionResult> GetAll(
+        [FromServices] ApplicationContext context
+    )
+    {
+        DateTime now = DateTime.UtcNow;
+
+        var result = context.Rooms.Include(r => r.RoomType).OrderBy(r => r.Number)
+            .Where(r => r.IsReady)
+            .Select(r => new
+            {
+                r.Number, r.RoomType,
+                IsFree = !context.LeaseRooms.Where(lr => lr.LeaseAgreement.StartAt <= now && lr.LeaseAgreement.EndAt >= now)
+                    .Select(lr => lr.RoomNumber).Contains(r.Number)
+            });
+
+        return Ok(result);
+    }
+
     [HttpGet("/api/rooms"), Authorize(Roles = $"{nameof(Posts.Hr)},{nameof(Posts.Maid)},{nameof(Posts.Admin)}")]
     public async Task<IActionResult> GetAll(
         [FromServices] ApplicationContext context,
@@ -19,13 +38,13 @@ public class RoomsController : ControllerBase
     )
     {
         DateTime now = DateTime.UtcNow;
-        
+
         IQueryable<Room> query = context.Rooms.Include(r => r.RoomType).OrderBy(r => r.Number);
         if (onlyFree)
         {
             query = query.Where(r => r.IsReady &&
-                !context.LeaseRooms.Where(lr => lr.LeaseAgreement.StartAt <= now && lr.LeaseAgreement.EndAt >= now)
-                    .Select(lr => lr.RoomNumber).Contains(r.Number)
+                                     !context.LeaseRooms.Where(lr => lr.LeaseAgreement.StartAt <= now && lr.LeaseAgreement.EndAt >= now)
+                                         .Select(lr => lr.RoomNumber).Contains(r.Number)
             );
         }
 
